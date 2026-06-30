@@ -1,11 +1,20 @@
+/*
+ * What is _GNU_SOURCE?
+ *
+ * _GNU_SOURCE is a feature test macro used by glibc.
+ * It tells the header files to expose GNU/Linux-specific
+ * extensions in addition to the standard C/POSIX declarations.
+ */
+
 #define _GNU_SOURCE
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/mman.h>
-#include <string.h>
+#include <stdio.h>      // printf, fopen, fgets, etc.
+#include <stdlib.h>     // malloc, free, exit, etc.
+#include <unistd.h>     // "Unix standard": getpid, sbrk
+#include <sys/mman.h>   // "memory management": mmap, munmap, ...
+#include <string.h>     // strcpy
 
+// both global and static variables go to .data segment.
 int global_var = 123;
 static int static_var = 456;
 
@@ -13,16 +22,19 @@ void sample_function(void) {
     // Used only so we can print a function address.
 }
 
+// Used to insert break points
 void wait_enter(const char* message) {
     printf("\n=== %s ===\n", message);
     printf("Press Enter to continue...\n");
     getchar();
 }
 
+// 
 void dump_maps(const char* label) {
     printf("\n\n========== /proc/self/maps: %s ==========\n", label);
 
     FILE* f = fopen("/proc/self/maps", "r");
+
     if (f == NULL) {
         perror("fopen");
         exit(1);
@@ -45,16 +57,50 @@ int main(void) {
     printf("pid: %d\n", getpid());
 
     printf("\n--- basic addresses ---\n");
-    printf("function address:   %p\n", (void*)sample_function);
+    printf("function address:   %p\n", (void*)sample_function); // void* is a pointer to an object of unknown type.
     printf("global_var address: %p\n", (void*)&global_var);
     printf("static_var address: %p\n", (void*)&static_var);
     printf("stack_var address:  %p\n", (void*)&stack_var);
 
+    /*
+     * What are brk/sbrk?
+     *
+     * brk/sbrk are functions that modify the "program break",
+     * which is the end of the traditional brk-managed heap.
+     *
+     * brk(addr) sets the program break to addr.
+     * sbrk(x) shifts the program break by x bytes.
+     *
+     * sbrk shifts the program break and returns the program break
+     * address from before the shift. sbrk(0) is a common
+     * way to retrieve the current program break without changing it.
+     */
+    
     printf("\n--- program break ---\n");
     printf("program break at start: %p\n", sbrk(0));
 
     wait_enter("initial memory map");
     dump_maps("initial");
+
+    /*
+     * Below, we check whether malloc changed the program break.
+     *
+     * This does not assume that malloc always uses brk/sbrk.
+     * malloc may reuse memory already managed by the allocator,
+     * extend the traditional brk-managed heap, or use a separate
+     * mmap region.
+     *
+     * Comparing sbrk(0) before and after malloc only tells us
+     * whether the brk-managed heap moved.
+     *
+     * Calling brk/sbrk does not necessarily map the new virtual
+     * pages to physical frames immediately.
+     *
+     * Instead, the kernel records the expanded heap range as valid
+     * virtual memory for this process. Physical frames may be allocated
+     * later, when the process first touches those pages and a page fault
+     * occurs.
+     */
 
     wait_enter("small malloc: malloc(1024)");
     void* small = malloc(1024);
@@ -80,9 +126,36 @@ int main(void) {
 
     dump_maps("after large malloc");
 
+    /*
+     * What is mmap?
+     *
+     * In the textbook virtual memory address layout,
+     * the stack and heap are often shown as growing toward each other.
+     *
+     * In reality, a process can have separate memory mappings between
+     * the stack and the heap, and mmap can create mappings in this area.
+     * So dynamically allocated memory does not necessarily come from
+     * the top of the traditional heap.
+     */
+
     wait_enter("anonymous mmap: mmap(8192 bytes)");
     size_t mmap_size = 4096 * 2;
 
+    /*
+     * 1. NULL: We don't care where the mapping goes/starts.
+     * 
+     * 2. PROT_READ | PROT_WRITE: Protection permissions.
+     *      We can use bitwise OR (|) to combine multiple flags.
+     * 
+     * 3. MAP_PRIVATE | MAP_ANAONYMOUS: Mapping flags.
+     *      Private means private to this process.
+     *      Anonymous means the mapping is not backed by a file,
+     *      and the memory can be zero-initialized.
+     *
+     *      -1 and 0 are for file descriptor/offset, which
+     *      needs to be specified if the memory is file-mapped.
+     */
+    
     void* mapped = mmap(
         NULL,
         mmap_size,

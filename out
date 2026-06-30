@@ -1,0 +1,218 @@
+pid: 13473
+
+--- basic addresses ---
+function address:   0x5621ccb7f219
+global_var address: 0x5621ccb82088
+static_var address: 0x5621ccb8208c
+stack_var address:  0x7ffdc6d4ccf4
+
+--- program break ---
+program break at start: 0x5621f5948000
+
+=== initial memory map ===
+Press Enter to continue...
+
+
+
+========== /proc/self/maps: initial ==========
+5621ccb7e000-5621ccb7f000 r--p 00000000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb7f000-5621ccb80000 r-xp 00001000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb80000-5621ccb81000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb81000-5621ccb82000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb82000-5621ccb83000 rw-p 00003000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621f5927000-5621f5948000 rw-p 00000000 00:00 0                          [heap]
+7f5aaee00000-7f5aaee24000 r--p 00000000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaee24000-7f5aaef9a000 r-xp 00024000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaef9a000-7f5aaf00f000 r--p 0019a000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf00f000-7f5aaf013000 r--p 0020e000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf013000-7f5aaf015000 rw-p 00212000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf015000-7f5aaf01d000 rw-p 00000000 00:00 0 
+7f5aaf1d2000-7f5aaf1d7000 rw-p 00000000 00:00 0 
+7f5aaf1f1000-7f5aaf1f5000 r--p 00000000 00:00 0                          [vvar]
+7f5aaf1f5000-7f5aaf1f7000 r--p 00000000 00:00 0                          [vvar_vclock]
+7f5aaf1f7000-7f5aaf1f9000 r-xp 00000000 00:00 0                          [vdso]
+7f5aaf1f9000-7f5aaf1fa000 r--p 00000000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf1fa000-7f5aaf224000 r-xp 00001000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf224000-7f5aaf233000 r--p 0002b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf233000-7f5aaf235000 r--p 00039000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf235000-7f5aaf236000 rw-p 0003b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf236000-7f5aaf237000 rw-p 00000000 00:00 0 
+7ffdc6d2d000-7ffdc6d4e000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+========== end maps ==========
+
+
+=== small malloc: malloc(1024) ===
+Press Enter to continue...
+
+small malloc address: 0x5621f5927a10
+program break after small malloc: 0x5621f5948000
+
+
+========== /proc/self/maps: after small malloc ==========
+5621ccb7e000-5621ccb7f000 r--p 00000000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb7f000-5621ccb80000 r-xp 00001000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb80000-5621ccb81000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb81000-5621ccb82000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb82000-5621ccb83000 rw-p 00003000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621f5927000-5621f5948000 rw-p 00000000 00:00 0                          [heap]
+7f5aaee00000-7f5aaee24000 r--p 00000000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaee24000-7f5aaef9a000 r-xp 00024000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaef9a000-7f5aaf00f000 r--p 0019a000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf00f000-7f5aaf013000 r--p 0020e000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf013000-7f5aaf015000 rw-p 00212000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf015000-7f5aaf01d000 rw-p 00000000 00:00 0 
+7f5aaf1d2000-7f5aaf1d7000 rw-p 00000000 00:00 0 
+7f5aaf1f1000-7f5aaf1f5000 r--p 00000000 00:00 0                          [vvar]
+7f5aaf1f5000-7f5aaf1f7000 r--p 00000000 00:00 0                          [vvar_vclock]
+7f5aaf1f7000-7f5aaf1f9000 r-xp 00000000 00:00 0                          [vdso]
+7f5aaf1f9000-7f5aaf1fa000 r--p 00000000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf1fa000-7f5aaf224000 r-xp 00001000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf224000-7f5aaf233000 r--p 0002b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf233000-7f5aaf235000 r--p 00039000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf235000-7f5aaf236000 rw-p 0003b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf236000-7f5aaf237000 rw-p 00000000 00:00 0 
+7ffdc6d2d000-7ffdc6d4e000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+========== end maps ==========
+
+
+=== large malloc: malloc(10 MB) ===
+Press Enter to continue...
+
+large malloc address: 0x7f5aae3ff010
+program break after large malloc: 0x5621f5948000
+
+
+========== /proc/self/maps: after large malloc ==========
+5621ccb7e000-5621ccb7f000 r--p 00000000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb7f000-5621ccb80000 r-xp 00001000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb80000-5621ccb81000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb81000-5621ccb82000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb82000-5621ccb83000 rw-p 00003000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621f5927000-5621f5948000 rw-p 00000000 00:00 0                          [heap]
+7f5aae3ff000-7f5aaee00000 rw-p 00000000 00:00 0 
+7f5aaee00000-7f5aaee24000 r--p 00000000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaee24000-7f5aaef9a000 r-xp 00024000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaef9a000-7f5aaf00f000 r--p 0019a000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf00f000-7f5aaf013000 r--p 0020e000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf013000-7f5aaf015000 rw-p 00212000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf015000-7f5aaf01d000 rw-p 00000000 00:00 0 
+7f5aaf1d2000-7f5aaf1d7000 rw-p 00000000 00:00 0 
+7f5aaf1f1000-7f5aaf1f5000 r--p 00000000 00:00 0                          [vvar]
+7f5aaf1f5000-7f5aaf1f7000 r--p 00000000 00:00 0                          [vvar_vclock]
+7f5aaf1f7000-7f5aaf1f9000 r-xp 00000000 00:00 0                          [vdso]
+7f5aaf1f9000-7f5aaf1fa000 r--p 00000000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf1fa000-7f5aaf224000 r-xp 00001000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf224000-7f5aaf233000 r--p 0002b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf233000-7f5aaf235000 r--p 00039000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf235000-7f5aaf236000 rw-p 0003b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf236000-7f5aaf237000 rw-p 00000000 00:00 0 
+7ffdc6d2d000-7ffdc6d4e000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+========== end maps ==========
+
+
+=== anonymous mmap: mmap(8192 bytes) ===
+Press Enter to continue...
+
+mmap address: 0x7f5aaf1ef000
+mapped content: hello from mmap
+
+
+========== /proc/self/maps: after mmap ==========
+5621ccb7e000-5621ccb7f000 r--p 00000000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb7f000-5621ccb80000 r-xp 00001000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb80000-5621ccb81000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb81000-5621ccb82000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb82000-5621ccb83000 rw-p 00003000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621f5927000-5621f5948000 rw-p 00000000 00:00 0                          [heap]
+7f5aae3ff000-7f5aaee00000 rw-p 00000000 00:00 0 
+7f5aaee00000-7f5aaee24000 r--p 00000000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaee24000-7f5aaef9a000 r-xp 00024000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaef9a000-7f5aaf00f000 r--p 0019a000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf00f000-7f5aaf013000 r--p 0020e000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf013000-7f5aaf015000 rw-p 00212000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf015000-7f5aaf01d000 rw-p 00000000 00:00 0 
+7f5aaf1d2000-7f5aaf1d7000 rw-p 00000000 00:00 0 
+7f5aaf1ef000-7f5aaf1f1000 rw-p 00000000 00:00 0 
+7f5aaf1f1000-7f5aaf1f5000 r--p 00000000 00:00 0                          [vvar]
+7f5aaf1f5000-7f5aaf1f7000 r--p 00000000 00:00 0                          [vvar_vclock]
+7f5aaf1f7000-7f5aaf1f9000 r-xp 00000000 00:00 0                          [vdso]
+7f5aaf1f9000-7f5aaf1fa000 r--p 00000000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf1fa000-7f5aaf224000 r-xp 00001000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf224000-7f5aaf233000 r--p 0002b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf233000-7f5aaf235000 r--p 00039000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf235000-7f5aaf236000 rw-p 0003b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf236000-7f5aaf237000 rw-p 00000000 00:00 0 
+7ffdc6d2d000-7ffdc6d4e000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+========== end maps ==========
+
+
+=== munmap ===
+Press Enter to continue...
+
+
+
+========== /proc/self/maps: after munmap ==========
+5621ccb7e000-5621ccb7f000 r--p 00000000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb7f000-5621ccb80000 r-xp 00001000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb80000-5621ccb81000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb81000-5621ccb82000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb82000-5621ccb83000 rw-p 00003000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621f5927000-5621f5948000 rw-p 00000000 00:00 0                          [heap]
+7f5aae3ff000-7f5aaee00000 rw-p 00000000 00:00 0 
+7f5aaee00000-7f5aaee24000 r--p 00000000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaee24000-7f5aaef9a000 r-xp 00024000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaef9a000-7f5aaf00f000 r--p 0019a000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf00f000-7f5aaf013000 r--p 0020e000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf013000-7f5aaf015000 rw-p 00212000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf015000-7f5aaf01d000 rw-p 00000000 00:00 0 
+7f5aaf1d2000-7f5aaf1d7000 rw-p 00000000 00:00 0 
+7f5aaf1f1000-7f5aaf1f5000 r--p 00000000 00:00 0                          [vvar]
+7f5aaf1f5000-7f5aaf1f7000 r--p 00000000 00:00 0                          [vvar_vclock]
+7f5aaf1f7000-7f5aaf1f9000 r-xp 00000000 00:00 0                          [vdso]
+7f5aaf1f9000-7f5aaf1fa000 r--p 00000000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf1fa000-7f5aaf224000 r-xp 00001000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf224000-7f5aaf233000 r--p 0002b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf233000-7f5aaf235000 r--p 00039000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf235000-7f5aaf236000 rw-p 0003b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf236000-7f5aaf237000 rw-p 00000000 00:00 0 
+7ffdc6d2d000-7ffdc6d4e000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+========== end maps ==========
+
+
+=== free mallocs ===
+Press Enter to continue...
+
+program break after free: 0x5621f5948000
+
+
+========== /proc/self/maps: after free ==========
+5621ccb7e000-5621ccb7f000 r--p 00000000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb7f000-5621ccb80000 r-xp 00001000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb80000-5621ccb81000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb81000-5621ccb82000 r--p 00002000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621ccb82000-5621ccb83000 rw-p 00003000 103:02 1190137                   /home/tay/Projects/mmap/mmap
+5621f5927000-5621f5948000 rw-p 00000000 00:00 0                          [heap]
+7f5aaee00000-7f5aaee24000 r--p 00000000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaee24000-7f5aaef9a000 r-xp 00024000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaef9a000-7f5aaf00f000 r--p 0019a000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf00f000-7f5aaf013000 r--p 0020e000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf013000-7f5aaf015000 rw-p 00212000 103:02 2231301                   /usr/lib/libc.so.6
+7f5aaf015000-7f5aaf01d000 rw-p 00000000 00:00 0 
+7f5aaf1d2000-7f5aaf1d7000 rw-p 00000000 00:00 0 
+7f5aaf1f1000-7f5aaf1f5000 r--p 00000000 00:00 0                          [vvar]
+7f5aaf1f5000-7f5aaf1f7000 r--p 00000000 00:00 0                          [vvar_vclock]
+7f5aaf1f7000-7f5aaf1f9000 r-xp 00000000 00:00 0                          [vdso]
+7f5aaf1f9000-7f5aaf1fa000 r--p 00000000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf1fa000-7f5aaf224000 r-xp 00001000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf224000-7f5aaf233000 r--p 0002b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf233000-7f5aaf235000 r--p 00039000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf235000-7f5aaf236000 rw-p 0003b000 103:02 2231292                   /usr/lib/ld-linux-x86-64.so.2
+7f5aaf236000-7f5aaf237000 rw-p 00000000 00:00 0 
+7ffdc6d2d000-7ffdc6d4e000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+========== end maps ==========
