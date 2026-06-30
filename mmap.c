@@ -1,11 +1,10 @@
 /*
  * What is _GNU_SOURCE?
  *
- * _GNU_SOURCE is a feature test macro used by glibc.
+ * _GNU_SOURCE is a macro used by glibc.
  * It tells the header files to expose GNU/Linux-specific
  * extensions in addition to the standard C/POSIX declarations.
  */
-
 #define _GNU_SOURCE
 
 #include <stdio.h>      // printf, fopen, fgets, etc.
@@ -14,7 +13,7 @@
 #include <sys/mman.h>   // "memory management": mmap, munmap, ...
 #include <string.h>     // strcpy
 
-// both global and static variables go to .data segment.
+// Both global and static variables go to .data segment.
 int global_var = 123;
 static int static_var = 456;
 
@@ -29,10 +28,16 @@ void wait_enter(const char* message) {
     getchar();
 }
 
-// 
 void dump_maps(const char* label) {
     printf("\n\n========== /proc/self/maps: %s ==========\n", label);
 
+    /*
+     * /proc is a kernel-provided interface that lets programs
+     * inspect process and system information as if reading from files.
+     *
+     * /proc/self/maps shows the virtual memory regions of the process
+     * that opens it.
+     */
     FILE* f = fopen("/proc/self/maps", "r");
 
     if (f == NULL) {
@@ -65,7 +70,7 @@ int main(void) {
     /*
      * What are brk/sbrk?
      *
-     * brk/sbrk are functions that modify the "program break",
+     * brk/sbrk are functions that modify the "program break,"
      * which is the end of the traditional brk-managed heap.
      *
      * brk(addr) sets the program break to addr.
@@ -94,7 +99,7 @@ int main(void) {
      * whether the brk-managed heap moved.
      *
      * Calling brk/sbrk does not necessarily map the new virtual
-     * pages to physical frames immediately.
+     * pages to physical frames right away.
      *
      * Instead, the kernel records the expanded heap range as valid
      * virtual memory for this process. Physical frames may be allocated
@@ -134,6 +139,7 @@ int main(void) {
      *
      * In reality, a process can have separate memory mappings between
      * the stack and the heap, and mmap can create mappings in this area.
+     * 
      * So dynamically allocated memory does not necessarily come from
      * the top of the traditional heap.
      */
@@ -142,13 +148,15 @@ int main(void) {
     size_t mmap_size = 4096 * 2;
 
     /*
+     * mmap Input Arguments
+     * 
      * 1. NULL: We don't care where the mapping goes/starts.
      *
      * 2. mmap_size: Note that memory is mapped at page granularity.
      *      If the requested size is not a multiple of the page size,
      *      the kernel will round up and map enough pages to cover the 
      *      requested range.
-     * r si
+     * 
      * 3. PROT_READ | PROT_WRITE: Protection permissions.
      *      We can use bitwise OR (|) to combine multiple flags.
      * 
@@ -157,8 +165,8 @@ int main(void) {
      *      Anonymous means the mapping is not backed by a file,
      *      and the memory can be zero-initialized.
      *
-     *      -1 and 0 are for file descriptor/offset, which
-     *      needs to be specified if the memory is file-mapped.
+     *      -1 and 0 are placeholders for file descriptor/offset, which
+     *      needs to be specified if memory is file-mapped.
      */
     
     void* mapped = mmap(
