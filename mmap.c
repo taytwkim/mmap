@@ -143,11 +143,16 @@ int main(void) {
 
     /*
      * 1. NULL: We don't care where the mapping goes/starts.
-     * 
-     * 2. PROT_READ | PROT_WRITE: Protection permissions.
+     *
+     * 2. mmap_size: Note that memory is mapped at page granularity.
+     *      If the requested size is not a multiple of the page size,
+     *      the kernel will round up and map enough pages to cover the 
+     *      requested range.
+     * r si
+     * 3. PROT_READ | PROT_WRITE: Protection permissions.
      *      We can use bitwise OR (|) to combine multiple flags.
      * 
-     * 3. MAP_PRIVATE | MAP_ANAONYMOUS: Mapping flags.
+     * 4. MAP_PRIVATE | MAP_ANAONYMOUS: Mapping flags.
      *      Private means private to this process.
      *      Anonymous means the mapping is not backed by a file,
      *      and the memory can be zero-initialized.
