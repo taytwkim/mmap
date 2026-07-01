@@ -33,7 +33,7 @@ void dump_maps(const char* label) {
 
     /*
      * /proc is a kernel-provided interface that lets programs
-     * inspect process and system information as if reading from files.
+     * inspect process and system info as if reading from files.
      *
      * /proc/self/maps shows the virtual memory regions of the process
      * that opens it.
@@ -41,6 +41,11 @@ void dump_maps(const char* label) {
     FILE* f = fopen("/proc/self/maps", "r");
 
     if (f == NULL) {
+        /*
+         * perror means print error
+         * perror prints a custom label followed by a human-readable message 
+         * for the most recent error stored in errno.
+         */
         perror("fopen");
         exit(1);
     }
@@ -98,8 +103,8 @@ int main(void) {
      * Comparing sbrk(0) before and after malloc only tells us
      * whether the brk-managed heap moved.
      *
-     * Calling brk/sbrk does not necessarily map the new virtual
-     * pages to physical frames right away.
+     * Also note that calling brk/sbrk does not necessarily map 
+     * the new virtual pages to physical frames right away.
      *
      * Instead, the kernel records the expanded heap range as valid
      * virtual memory for this process. Physical frames may be allocated
@@ -148,7 +153,7 @@ int main(void) {
     size_t mmap_size = 4096 * 2;
 
     /*
-     * mmap Input Arguments
+     * MMAP Input Arguments
      * 
      * 1. NULL: We don't care where the mapping goes/starts.
      *
@@ -160,9 +165,9 @@ int main(void) {
      * 3. PROT_READ | PROT_WRITE: Protection permissions.
      *      We can use bitwise OR (|) to combine multiple flags.
      * 
-     * 4. MAP_PRIVATE | MAP_ANAONYMOUS: Mapping flags.
+     * 4. MAP_PRIVATE | MAP_ANONYMOUS: Mapping flags.
      *      Private means private to this process.
-     *      Anonymous means the mapping is not backed by a file,
+     *      Anonymous means the mapping is not backed by a file
      *      and the memory can be zero-initialized.
      *
      *      -1 and 0 are placeholders for file descriptor/offset, which
