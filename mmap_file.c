@@ -33,7 +33,6 @@
  * So it is useful to think of a memory-mapped file as treating the file
  * as a collection of pages that can be randomly accessed.
  */
-
 int main(void) {
     /*
      * Create a file and write contents at specific offsets.

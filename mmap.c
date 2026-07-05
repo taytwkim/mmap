@@ -85,7 +85,6 @@ int main(void) {
      * address from before the shift. sbrk(0) is a common
      * way to retrieve the current program break without changing it.
      */
-    
     printf("\n--- program break ---\n");
     printf("program break at start: %p\n", sbrk(0));
 
@@ -111,9 +110,10 @@ int main(void) {
      * later, when the process first touches those pages and a page fault
      * occurs.
      */
-
     wait_enter("small malloc: malloc(1024)");
+
     void* small = malloc(1024);
+    
     if (small == NULL) {
         perror("malloc small");
         exit(1);
@@ -121,11 +121,12 @@ int main(void) {
 
     printf("small malloc address: %p\n", small);
     printf("program break after small malloc: %p\n", sbrk(0));
-
     dump_maps("after small malloc");
 
     wait_enter("large malloc: malloc(10 MB)");
+
     void* large = malloc(10 * 1024 * 1024);
+    
     if (large == NULL) {
         perror("malloc large");
         exit(1);
@@ -133,7 +134,6 @@ int main(void) {
 
     printf("large malloc address: %p\n", large);
     printf("program break after large malloc: %p\n", sbrk(0));
-
     dump_maps("after large malloc");
 
     /*
@@ -148,8 +148,8 @@ int main(void) {
      * So dynamically allocated memory does not necessarily come from
      * the top of the traditional heap.
      */
-
     wait_enter("anonymous mmap: mmap(8192 bytes)");
+
     size_t mmap_size = 4096 * 2;
 
     /*
@@ -173,7 +173,6 @@ int main(void) {
      *      -1 and 0 are placeholders for file descriptor/offset, which
      *      needs to be specified if memory is file-mapped.
      */
-    
     void* mapped = mmap(
         NULL,
         mmap_size,
@@ -191,11 +190,13 @@ int main(void) {
     printf("mmap address: %p\n", mapped);
 
     strcpy((char*)mapped, "hello from mmap");
+
     printf("mapped content: %s\n", (char*)mapped);
 
     dump_maps("after mmap");
 
     wait_enter("munmap");
+    
     if (munmap(mapped, mmap_size) == -1) {
         perror("munmap");
         exit(1);
@@ -204,6 +205,7 @@ int main(void) {
     dump_maps("after munmap");
 
     wait_enter("free mallocs");
+    
     free(small);
     free(large);
 
