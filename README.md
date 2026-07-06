@@ -1,6 +1,6 @@
-# Memory Mapping in Linux
+# Memory Management
 
-Short exercises to get familiar with memory mapping in Linux. 
+Short exercises to get familiar with memory management in Linux. 
 
 * `mmap.c` demonstrates the usage of `sbrk` and `mmap`.
 * `mmap_file.c` demonstrates the usage of memory-mapped files.
